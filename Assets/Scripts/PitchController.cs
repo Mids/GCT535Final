@@ -4,12 +4,18 @@ using UnityEngine.UI;
 public class PitchController : MonoBehaviour
 {
     public AudioSource audioSource;
+    public Slider tempoSliderUI;
     public Text tempoTextUI;
     public Text titleTextUI;
 
     private void Start()
     {
         titleTextUI.text = audioSource.clip.name;
+    }
+
+    public void Update()
+    {
+        tempoSliderUI.value += Input.GetAxis("Mouse ScrollWheel");
     }
 
     public void OnPitchChanged(float v)
