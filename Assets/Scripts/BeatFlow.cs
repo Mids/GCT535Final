@@ -26,6 +26,8 @@ public class BeatFlow : MonoBehaviour
     private int _goodStack = 0;
     private int _badStack = 0;
 
+    private Text _text;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -46,6 +48,8 @@ public class BeatFlow : MonoBehaviour
 
             bars[i].sizeDelta = new Vector2(width, height);
         }
+
+        _text = GetComponentInChildren<Text>();
     }
 
     // Update is called once per frame
@@ -55,10 +59,16 @@ public class BeatFlow : MonoBehaviour
 
         ChangeBackgroundAlpha();
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))// || Input.GetKeyDown(KeyCode.Space))
         {
             BeatChecker();
         }
+        
+        
+        var color = _text.color;
+        var alpha = color.a;
+        color.a = alpha > Time.deltaTime ? alpha - Time.deltaTime : 0f;
+        _text.color = color;
     }
 
     private void MoveBeatBar()
@@ -123,13 +133,19 @@ public class BeatFlow : MonoBehaviour
 
         if (closestBeat < 0.1f)
         {
-            print("good");
+            _text.text = "Good!";
+            var color = _text.color;
+            color.a = 1f;
+            _text.color = color;
             _goodStack++;
             _badStack = 0;
         }
         else
         {
-            print("bad");
+            _text.text = "Bad";
+            var color = _text.color;
+            color.a = 1f;
+            _text.color = color;
             _goodStack = 0;
             _badStack++;
         }
