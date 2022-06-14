@@ -406,6 +406,8 @@ MonoBehaviour:
   barPrefab: {fileID: 3385660924987015887, guid: 8465ce448b27a104192880bd0195b251,
     type: 3}
   width: 3
+  height: 30
+  tempo: 1
 --- !u!114 &637115717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,6 +572,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3610136826565460733, guid: e0c8b960c823da540b6ccd3ec93f971b,
         type: 3}
+      propertyPath: beatUI
+      value: 
+      objectReference: {fileID: 637115716}
+    - target: {fileID: 3610136826565460733, guid: e0c8b960c823da540b6ccd3ec93f971b,
+        type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1781222844}
@@ -602,6 +609,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3610136827176446442, guid: e0c8b960c823da540b6ccd3ec93f971b,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3610136827176446442, guid: e0c8b960c823da540b6ccd3ec93f971b,
+        type: 3}
+      propertyPath: m_MinValue
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3610136827227636832, guid: e0c8b960c823da540b6ccd3ec93f971b,
         type: 3}

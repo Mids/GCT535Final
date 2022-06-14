@@ -7,6 +7,7 @@ public class PitchController : MonoBehaviour
     public Slider tempoSliderUI;
     public Text tempoTextUI;
     public Text titleTextUI;
+    public BeatFlow beatUI;
 
     private void Start()
     {
@@ -15,7 +16,8 @@ public class PitchController : MonoBehaviour
 
     public void Update()
     {
-        tempoSliderUI.value += Input.GetAxis("Mouse ScrollWheel");
+        // tempoSliderUI.value += Input.GetAxis("Mouse ScrollWheel");
+        tempoSliderUI.value = beatUI.tempo;
     }
 
     public void OnPitchChanged(float v)
