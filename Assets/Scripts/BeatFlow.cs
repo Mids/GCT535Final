@@ -14,6 +14,12 @@ public class BeatFlow : MonoBehaviour
 
     public GameObject barPrefab;
 
+    public float width = 1f;
+
+    public float height = 30f;
+
+    private RectTransform[] bars = new RectTransform[10];
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -24,10 +30,43 @@ public class BeatFlow : MonoBehaviour
             float.TryParse(p, out var f);
             return f;
         }).ToArray();
+
+
+        for (int i = 0; i < bars.Length; i++)
+        {
+            bars[i] = Instantiate(barPrefab, transform).GetComponent<RectTransform>();
+            bars[i].localPosition = new Vector2(i * width - bars.Length * width / 2, 0);
+
+
+            bars[i].sizeDelta = new Vector2(width, height);
+        }
     }
 
     // Update is called once per frame
     private void Update()
+    {
+        var audioTime = audioSource.time;
+        var barIndex = 0;
+        foreach (var beat in _beatTimers)
+        {
+            if (audioTime > beat) continue;
+
+            if (barIndex == bars.Length) break;
+
+            var timeToBeat = beat - audioTime;
+
+            bars[barIndex++].localPosition = new Vector2(timeToBeat * 100f - 100f, 0);
+        }
+
+        ChangeBackgroundAlpha();
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        {
+            BeatChecker();
+        }
+    }
+
+    private void ChangeBackgroundAlpha()
     {
         var audioTime = audioSource.time;
 
@@ -46,9 +85,6 @@ public class BeatFlow : MonoBehaviour
 
             break;
         }
-        
-        if(Input.GetMouseButtonDown(0))
-            BeatChecker();
     }
 
     private void ChangeBackgroundAlpha(float a)
@@ -62,17 +98,26 @@ public class BeatFlow : MonoBehaviour
     {
         var audioTime = audioSource.time;
         var closestBeat = float.MaxValue;
-        
+
         foreach (var beat in _beatTimers)
         {
             var timeToBeat = Mathf.Abs(beat - audioTime);
             if (timeToBeat > closestBeat)
+            {
+                print($"beat: {beat}/{audioTime}, timeToBeat: {timeToBeat}, closestBeat: {closestBeat} ");
                 break;
+            }
 
             closestBeat = timeToBeat;
         }
 
-        print(closestBeat);
-
+        if (closestBeat < 0.1f)
+        {
+            print("good");
+        }
+        else
+        {
+            print("bad");
+        }
     }
 }
