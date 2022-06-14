@@ -12,6 +12,8 @@ public class BeatFlow : MonoBehaviour
 
     private Image _background;
 
+    public GameObject barPrefab;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -44,6 +46,9 @@ public class BeatFlow : MonoBehaviour
 
             break;
         }
+        
+        if(Input.GetMouseButtonDown(0))
+            BeatChecker();
     }
 
     private void ChangeBackgroundAlpha(float a)
@@ -51,5 +56,23 @@ public class BeatFlow : MonoBehaviour
         var color = _background.color;
         color.a = a;
         _background.color = color;
+    }
+
+    private void BeatChecker()
+    {
+        var audioTime = audioSource.time;
+        var closestBeat = float.MaxValue;
+        
+        foreach (var beat in _beatTimers)
+        {
+            var timeToBeat = Mathf.Abs(beat - audioTime);
+            if (timeToBeat > closestBeat)
+                break;
+
+            closestBeat = timeToBeat;
+        }
+
+        print(closestBeat);
+
     }
 }
